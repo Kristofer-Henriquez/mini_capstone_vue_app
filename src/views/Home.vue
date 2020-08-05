@@ -39,6 +39,7 @@
         <p>Price: <input v-model="currentProduct.price"></p>
         <p>Image_url: <input v-model="currentProduct.image_url"></p>
         <button v-on:click="updateProduct(currentProduct)"> Update product! </button>
+        <button v-on:click="destroyProduct(currentProduct)"> Delete product! </button>
         <button> Close </button>
       </form>
     </dialog>
@@ -113,6 +114,20 @@ export default {
       });
       
 
+    },
+    
+    destroyProduct: function(product) {
+      console.log(product);
+
+      axios.delete("/api/products/" + this.currentProduct.id).then(response => {
+        console.log(response.data);
+
+        var index = this.products.indexOf(product);
+
+        this.products.splice(index, 1);
+
+        console.log(index);
+      });
     }
   },
   
